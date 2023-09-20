@@ -94,6 +94,42 @@ public class Model extends Observable {
         setChanged();
     }
 
+    public boolean moveOneCol(int index){
+        int lastRow =  board.size() - 1;
+        boolean changed = false;
+        do{
+            //find next
+            Tile curTile = null;
+            for (int i = lastRow - 1; i >= 0; i--){
+                if (board.tile(index, i) != null){
+                    curTile = board.tile(index, i);
+                    break;
+                }
+            }
+            if (curTile == null) break;
+
+            if (board.tile(index, lastRow) == null){
+                //move to fill the last blank
+                board.move(index, lastRow, curTile);
+                changed = true;
+            } else if( curTile.value() == board.tile(index, lastRow).value()){
+                //move and merge
+                board.move( index, lastRow, curTile);
+                score += curTile.value() * 2;
+                changed = true;
+                lastRow--;
+            } else {
+                if(curTile.row() != lastRow - 1 ){
+                    //just move to the right position
+                    board.move(index, lastRow - 1, curTile);
+                    changed = true;
+                }
+                lastRow--;
+            }
+        } while (true);
+        return changed;
+    }
+
     /** Tilt the board toward SIDE. Return true iff this changes the board.
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
@@ -113,6 +149,11 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+        for (int i = 0; i < board.size(); i++){
+            changed = moveOneCol(i) || changed;
+        }
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
@@ -168,10 +209,14 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        for (int i = 0; i < b.size(); i++){
-            for (int j = 0; j < b.size(); j++){
+        for (int j = 0; j < b.size(); j++) {
+            for (int i = 0; i < b.size(); i++) {
                 if (b.tile(i, j) == null)
                     return true;
+            }
+        }
+        for (int j = 0; j < b.size(); j++){
+            for (int i = 0; i < b.size(); i++){
                 int valueOfTile = b.tile(i, j).value();
                 if (i != 0 && i != b.size() - 1 && j != 0 && j != b.size() - 1){
                     if (valueOfTile == b.tile(i-1, j).value() || valueOfTile == b.tile(i+1, j).value() ||
