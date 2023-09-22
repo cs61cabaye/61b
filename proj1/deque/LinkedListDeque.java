@@ -80,6 +80,21 @@ public class LinkedListDeque<Type> {
         System.out.println(stringDeque.toString());
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringDeque = new StringBuilder("[");
+        Node p = sentinel.next;
+        while (p != sentinel) {
+            stringDeque.append(p.item.toString());
+            p = p.next;
+            if (p != sentinel)
+                stringDeque.append(", ");
+        }
+        stringDeque.append("]");
+        return stringDeque.toString();
+    }
+
+
     public Type removeFirst() {
         if (isEmpty())
             return null;
@@ -87,6 +102,7 @@ public class LinkedListDeque<Type> {
         sentinel.next = tmpNode.next;
         tmpNode.next.prev = sentinel;
         size -= 1;
+        tmpNode.prev = tmpNode.next = null;
         return  tmpNode.item;
     }
 
@@ -97,6 +113,7 @@ public class LinkedListDeque<Type> {
         sentinel.prev = tmpNode.prev;
         tmpNode.prev.next = sentinel;
         size -= 1;
+        tmpNode.prev = tmpNode.next = null;
         return  tmpNode.item;
     }
 
@@ -149,7 +166,6 @@ public class LinkedListDeque<Type> {
                     return false;
                 }
             }
-
             return true;
         }
         return false;
