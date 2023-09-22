@@ -13,7 +13,7 @@ public class TimeAList {
             double time = times.get(i);
             int opCount = opCounts.get(i);
             double timePerOp = time / opCount * 1e6;
-            System.out.printf("%12d %12.2f %12d %12.2f\n", N, time, opCount, timePerOp);
+            System.out.printf("%15d %15.2f %15d %15.2f\n", N, time, opCount, timePerOp);
         }
     }
 
@@ -22,6 +22,27 @@ public class TimeAList {
     }
 
     public static void timeAListConstruction() {
-        // TODO: YOUR CODE HERE
+        AList<Integer>  Ns = new AList<>();
+        AList<Integer>  opCounts = new AList<>();
+        AList<Double> times = new AList<>();
+
+        int[] COUNT = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000};
+        for (int i :  COUNT)
+            testAlist(i, Ns, times, opCounts);
+
+        printTimingTable(Ns, times, opCounts);
+    }
+    private static void testAlist(int Count, AList<Integer> Ns, AList<Double> times, AList<Integer> opCounts){
+        AList<Integer> baseAlist = new AList<>();
+        for (int i = 0; i < 100; i++)
+            baseAlist.addLast(i);
+
+        Stopwatch sw = new Stopwatch();
+        for (int i = 0; i < Count; i++)
+            baseAlist.addLast(1);
+        double timeInSeconds = sw.elapsedTime();
+        Ns.addLast(Count);
+        opCounts.addLast(Count);
+        times.addLast(timeInSeconds);
     }
 }

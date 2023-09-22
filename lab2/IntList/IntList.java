@@ -36,6 +36,29 @@ public class IntList {
         return rest.get(i - 1);
     }
 
+    public static void evenOdd(IntList lst) {
+        if (lst == null || lst.rest == null)
+            return;
+        int index = 0;
+        IntList start = lst;
+        IntList pre = lst;
+        IntList cur = lst.rest;
+        while (cur != null){
+            index++;
+            if (index % 2 ==0){
+                //add
+                start.rest = new IntList(cur.first, start.rest);
+                start = start.rest;
+
+                //remove
+                pre.rest = cur.rest;
+            } else {
+                pre = cur;
+            }
+            cur = cur.rest;
+        }
+    }
+
     /** Method to return a string representation of an IntList */
     public String toString() {
         if (rest == null) {
