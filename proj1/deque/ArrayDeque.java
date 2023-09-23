@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<Type> implements Iterable<Type>, Deque<Type> {
+public class ArrayDeque<Type> implements Deque<Type> {
     private int first, last, size;
     private Type[] items;
 
@@ -150,12 +150,10 @@ public class ArrayDeque<Type> implements Iterable<Type>, Deque<Type> {
             index = 0;
         }
 
-        @Override
         public boolean hasNext() {
             return index < size;
         }
 
-        @Override
         public Type next() {
             if (index >= size)
                 return null;

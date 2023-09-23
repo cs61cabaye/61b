@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public interface Deque<Type> {
+public interface Deque<Type>  extends Iterable<Type> {
     public void addFirst(Type item);
     public void addLast(Type item);
 
