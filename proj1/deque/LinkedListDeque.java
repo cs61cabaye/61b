@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<Type> {
+public class LinkedListDeque<Type> implements Deque<Type>, Iterable<Type>{
     /* inner class of the Node*/
     private class Node{
         public Node prev;
@@ -45,6 +45,7 @@ public class LinkedListDeque<Type> {
         size = 0;
     }
 
+    @Override
     public void addFirst(Type item) {
         Node tmp = sentinel.next;
         sentinel.next = new Node(item, sentinel,  tmp);
@@ -52,6 +53,7 @@ public class LinkedListDeque<Type> {
         size += 1;
     }
 
+    @Override
     public void addLast(Type item) {
         Node tmp = sentinel.prev;
         sentinel.prev = new Node(item, tmp,  sentinel);
@@ -59,14 +61,12 @@ public class LinkedListDeque<Type> {
         size += 1;
     }
 
-    public boolean isEmpty() {
-        return  size == 0;
-    }
-
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         StringBuilder stringDeque = new StringBuilder("[");
         Node p = sentinel.next;
@@ -95,6 +95,7 @@ public class LinkedListDeque<Type> {
     }
 
 
+    @Override
     public Type removeFirst() {
         if (isEmpty())
             return null;
@@ -106,6 +107,7 @@ public class LinkedListDeque<Type> {
         return  tmpNode.item;
     }
 
+    @Override
     public Type removeLast() {
         if (isEmpty())
             return null;
@@ -117,6 +119,7 @@ public class LinkedListDeque<Type> {
         return  tmpNode.item;
     }
 
+    @Override
     public Type get(int index) {
         Node p = sentinel.next;
         while (p != sentinel){
@@ -144,6 +147,7 @@ public class LinkedListDeque<Type> {
         return  getRecursive(index, sentinel.next);
     }
 
+    @Override
     public Iterator<Type> iterator() {
         return new DequeIterator();
     }

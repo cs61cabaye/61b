@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<Type> implements Iterable<Type> {
+public class ArrayDeque<Type> implements Iterable<Type>, Deque<Type> {
     private int first, last, size;
     private Type[] items;
 
@@ -13,6 +13,7 @@ public class ArrayDeque<Type> implements Iterable<Type> {
         last = first + 1;
     }
 
+    @Override
     public void addFirst(Type item) {
         if (size >= items.length) {
             resizeItems(size * 2);
@@ -31,14 +32,12 @@ public class ArrayDeque<Type> implements Iterable<Type> {
         size += 1;
     }
 
-    public boolean isEmpty() {
-        return  size == 0;
-    }
-
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         StringBuilder stringDeque = new StringBuilder("[");
         for (int i = 0; i < size; i++) {
@@ -62,6 +61,7 @@ public class ArrayDeque<Type> implements Iterable<Type> {
         return stringDeque.toString();
     }
 
+    @Override
     public Type removeFirst() {
         if (isEmpty())
             return null;
@@ -74,6 +74,7 @@ public class ArrayDeque<Type> implements Iterable<Type> {
         return  tmp;
     }
 
+    @Override
     public Type removeLast() {
         if (isEmpty())
             return null;
@@ -86,6 +87,7 @@ public class ArrayDeque<Type> implements Iterable<Type> {
         return  tmp;
     }
 
+    @Override
     public Type get(int index) {
         if (isEmpty())
             return null;
@@ -161,8 +163,8 @@ public class ArrayDeque<Type> implements Iterable<Type> {
         }
     }
 
+    @Override
     public Iterator<Type> iterator() {
         return new DequeIterator();
     }
-
 }

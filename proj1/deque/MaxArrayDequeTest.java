@@ -26,12 +26,7 @@ public class MaxArrayDequeTest {
         mad1.printDeque();
         System.out.println(mad1.max());
 
-        Comparator<String> s = new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
-            }
-        };
+        Comparator<String> s = (o1, o2) -> o1.compareTo(o2);
         MaxArrayDeque<String> mad2 = new MaxArrayDeque<>(s);
         String[] sentences = "Z za A There are no runtime requirements on these additional methods, we only care about the correctness of your answer. Sometimes, there might be multiple elements in the MaxArrayDeque that are all equal and hence all the max: in in this case, you can return any of them and they will be considered correct.".split("\\s+");
         for (String ss : sentences)
