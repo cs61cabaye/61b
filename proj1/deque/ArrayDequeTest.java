@@ -38,21 +38,26 @@ public class ArrayDequeTest {
         LinkedListDeque<Integer> B = new LinkedListDeque<>();
         int N = 50000;
         for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 3);
+            int operationNumber = StdRandom.uniform(0, 5);
             if (operationNumber == 0) {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
                 L.addLast(randVal);
                 B.addLast(randVal);
             } else if (operationNumber == 1) {
-                // size
-                int size1 = L.size();
-                int size2 = B.size();
-                Assert.assertEquals(size1, size2);
+                Assert.assertEquals(L.size(), B.size());
             } else if (operationNumber == 2) {
                 if (L.size() >0 && B.size() > 0) {
                     int rlast1 = L.removeLast();
                     int rlast2 = B.removeLast();
+                    Assert.assertEquals(rlast1, rlast2);
+                } else if (operationNumber == 3) {
+                    int randVal = StdRandom.uniform(0, 100);
+                    L.addFirst(randVal);
+                    B.addFirst(randVal);
+                } else if (operationNumber == 4) {
+                    int rlast1 =L.removeFirst();
+                    int rlast2 = B.removeFirst();
                     Assert.assertEquals(rlast1, rlast2);
                 }
             }
@@ -103,9 +108,10 @@ public class ArrayDequeTest {
         for (int i = 0; i < 200; i++) {
             lld5.addLast(i);
         }
+        String f1 = lld5.toString();
         lld5.resizeItems(2000);
         lld5.resizeItems(200);
-        lld5.printDeque();
+        Assert.assertEquals(f1, lld5.toString());
 
         lld5 = new ArrayDeque<Integer>();
         for (int i = 0; i < 10; i++) {
@@ -114,10 +120,10 @@ public class ArrayDequeTest {
         for (int i = 0; i < 190; i++) {
             lld5.addFirst(i);
         }
-        lld5.printDeque();
+
+        f1 = lld5.toString();
         lld5.resizeItems(2000);
         lld5.resizeItems(300);
-        lld5.printDeque();
-
+        Assert.assertEquals(f1, lld5.toString());
     }
 }

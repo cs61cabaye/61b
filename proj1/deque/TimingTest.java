@@ -3,9 +3,13 @@ package deque;
 import edu.princeton.cs.algs4.Stopwatch;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class TimingTest {
     private static void printTimingTable(ArrayDeque<Integer> Ns, ArrayDeque<Double> times, ArrayDeque<Integer> opCounts) {
@@ -29,22 +33,43 @@ public class TimingTest {
         ArrayDeque<Integer>  opCounts = new ArrayDeque<>();
         ArrayDeque<Double> times = new ArrayDeque<>();
 
-        int[] COUNT = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000};
+        int[] COUNT = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000};
         for (int i :  COUNT)
             testAlist(i, Ns, times, opCounts);
 
         printTimingTable(Ns, times, opCounts);
+
+        for (int i :  COUNT)
+            testJava(i, Ns, times, opCounts);
+
+        printTimingTable(Ns, times, opCounts);
     }
     private static void testAlist(int Count, ArrayDeque<Integer> Ns, ArrayDeque<Double> times, ArrayDeque<Integer> opCounts){
-        ArrayDeque<Integer> baseAlist = new ArrayDeque<>();
+        ArrayDeque<String> baseAlist = new ArrayDeque<>();
         for (int i = 0; i < 100; i++)
-            baseAlist.addLast(i);
+            baseAlist.addLast(i + "");
 
         Stopwatch sw = new Stopwatch();
         for (int i = 0; i < Count; i++)
-            baseAlist.addLast(1);
+            baseAlist.addLast(i + "");
         for (int i = 0; i < Count; i++)
             baseAlist.removeLast();
+        double timeInSeconds = sw.elapsedTime();
+        Ns.addLast(Count);
+        opCounts.addLast(Count);
+        times.addLast(timeInSeconds);
+    }
+
+    private static void testJava(int Count, ArrayDeque<Integer> Ns, ArrayDeque<Double> times, ArrayDeque<Integer> opCounts){
+        Collection<String> baseAlist = new ArrayList<>();
+        for (int i = 0; i < 100; i++)
+            baseAlist.add(i + "");
+
+        Stopwatch sw = new Stopwatch();
+        for (int i = 0; i < Count; i++)
+            baseAlist.add(i + "");
+        for (int i = 0; i < Count; i++)
+            baseAlist.remove(i + "");
         double timeInSeconds = sw.elapsedTime();
         Ns.addLast(Count);
         opCounts.addLast(Count);
